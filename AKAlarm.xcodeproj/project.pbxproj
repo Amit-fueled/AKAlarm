@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1070C7561DEEF1970046EB06 /* DatePickerAccessoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1070C7551DEEF1970046EB06 /* DatePickerAccessoryView.xib */; };
+		1070C75A1DEF04590046EB06 /* CustomDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1070C7591DEF04590046EB06 /* CustomDateView.swift */; };
 		10714E831DED958700207C70 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10714E821DED958700207C70 /* AppDelegate.swift */; };
 		10714E851DED958700207C70 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10714E841DED958700207C70 /* ViewController.swift */; };
 		10714E881DED958700207C70 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 10714E861DED958700207C70 /* Main.storyboard */; };
@@ -15,6 +17,8 @@
 		10714E901DED958700207C70 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 10714E8E1DED958700207C70 /* LaunchScreen.storyboard */; };
 		10714E9B1DED958700207C70 /* AKAlarmTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10714E9A1DED958700207C70 /* AKAlarmTests.swift */; };
 		10714EA61DED958700207C70 /* AKAlarmUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10714EA51DED958700207C70 /* AKAlarmUITests.swift */; };
+		10714EB71DEDAD1D00207C70 /* AlarmTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10714EB61DEDAD1D00207C70 /* AlarmTableViewCell.xib */; };
+		10714EB91DEDAD6A00207C70 /* AlarmTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10714EB81DEDAD6A00207C70 /* AlarmTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +39,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1070C7551DEEF1970046EB06 /* DatePickerAccessoryView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DatePickerAccessoryView.xib; sourceTree = "<group>"; };
+		1070C7591DEF04590046EB06 /* CustomDateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomDateView.swift; sourceTree = "<group>"; };
 		10714E7F1DED958700207C70 /* AKAlarm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AKAlarm.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		10714E821DED958700207C70 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		10714E841DED958700207C70 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -49,6 +55,8 @@
 		10714EA11DED958700207C70 /* AKAlarmUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AKAlarmUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		10714EA51DED958700207C70 /* AKAlarmUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AKAlarmUITests.swift; sourceTree = "<group>"; };
 		10714EA71DED958700207C70 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		10714EB61DEDAD1D00207C70 /* AlarmTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlarmTableViewCell.xib; sourceTree = "<group>"; };
+		10714EB81DEDAD6A00207C70 /* AlarmTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlarmTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +107,7 @@
 		10714E811DED958700207C70 /* AKAlarm */ = {
 			isa = PBXGroup;
 			children = (
+				10714EB31DEDA83B00207C70 /* Views */,
 				10714E821DED958700207C70 /* AppDelegate.swift */,
 				10714E841DED958700207C70 /* ViewController.swift */,
 				10714E861DED958700207C70 /* Main.storyboard */,
@@ -126,6 +135,17 @@
 				10714EA71DED958700207C70 /* Info.plist */,
 			);
 			path = AKAlarmUITests;
+			sourceTree = "<group>";
+		};
+		10714EB31DEDA83B00207C70 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				10714EB61DEDAD1D00207C70 /* AlarmTableViewCell.xib */,
+				10714EB81DEDAD6A00207C70 /* AlarmTableViewCell.swift */,
+				1070C7551DEEF1970046EB06 /* DatePickerAccessoryView.xib */,
+				1070C7591DEF04590046EB06 /* CustomDateView.swift */,
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -235,9 +255,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1070C7561DEEF1970046EB06 /* DatePickerAccessoryView.xib in Resources */,
 				10714E901DED958700207C70 /* LaunchScreen.storyboard in Resources */,
 				10714E8D1DED958700207C70 /* Assets.xcassets in Resources */,
 				10714E881DED958700207C70 /* Main.storyboard in Resources */,
+				10714EB71DEDAD1D00207C70 /* AlarmTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -263,8 +285,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				10714E851DED958700207C70 /* ViewController.swift in Sources */,
+				1070C75A1DEF04590046EB06 /* CustomDateView.swift in Sources */,
 				10714E831DED958700207C70 /* AppDelegate.swift in Sources */,
 				10714E8B1DED958700207C70 /* AKAlarm.xcdatamodeld in Sources */,
+				10714EB91DEDAD6A00207C70 /* AlarmTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -509,6 +533,7 @@
 				10714EAC1DED958700207C70 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		10714EAD1DED958700207C70 /* Build configuration list for PBXNativeTarget "AKAlarmTests" */ = {
 			isa = XCConfigurationList;
@@ -517,6 +542,7 @@
 				10714EAF1DED958700207C70 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		10714EB01DED958700207C70 /* Build configuration list for PBXNativeTarget "AKAlarmUITests" */ = {
 			isa = XCConfigurationList;
@@ -525,6 +551,7 @@
 				10714EB21DED958700207C70 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
