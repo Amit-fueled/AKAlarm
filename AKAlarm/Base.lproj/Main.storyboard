@@ -10,10 +10,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Alarm View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="AKAlarm" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" userLabel="Alarm View Controller" customClass="AlarmViewController" customModule="AKAlarm" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -34,10 +34,9 @@
                                 <rect key="frame" x="0.0" y="517" width="375" height="150"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qSd-RS-i9I">
-                                        <rect key="frame" x="329" y="0.0" width="46" height="21"/>
+                                        <rect key="frame" x="329" y="7" width="46" height="28"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="46" id="DVX-zU-1hm"/>
-                                            <constraint firstAttribute="height" constant="21" id="cF8-CG-b2R"/>
+                                            <constraint firstAttribute="width" constant="46" id="F7H-qo-yen"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                         <state key="normal" title="Done"/>
@@ -46,10 +45,9 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OVY-pc-ANi">
-                                        <rect key="frame" x="0.0" y="0.0" width="46" height="21"/>
+                                        <rect key="frame" x="0.0" y="7" width="46" height="28"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="46" id="PoZ-fg-Qa6"/>
-                                            <constraint firstAttribute="height" constant="21" id="Wml-Hp-oCE"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                         <state key="normal" title="Cancel"/>
@@ -58,7 +56,7 @@
                                         </connections>
                                     </button>
                                     <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="Enk-3b-g9P">
-                                        <rect key="frame" x="0.0" y="21" width="375" height="129"/>
+                                        <rect key="frame" x="0.0" y="35" width="375" height="115"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <date key="date" timeIntervalSinceReferenceDate="502203288.24357003">
                                             <!--2016-11-30 12:54:48 +0000-->
@@ -67,14 +65,16 @@
                                 </subviews>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <constraints>
+                                    <constraint firstItem="qSd-RS-i9I" firstAttribute="top" secondItem="OVY-pc-ANi" secondAttribute="top" id="0Hz-57-TUo"/>
                                     <constraint firstItem="Enk-3b-g9P" firstAttribute="leading" secondItem="FSu-6u-RP3" secondAttribute="leading" id="Bhx-nw-DgC"/>
+                                    <constraint firstItem="Enk-3b-g9P" firstAttribute="top" secondItem="qSd-RS-i9I" secondAttribute="bottom" id="CVY-GL-h3w"/>
                                     <constraint firstAttribute="height" constant="150" id="PaM-qL-zQv"/>
-                                    <constraint firstAttribute="trailing" secondItem="qSd-RS-i9I" secondAttribute="trailing" id="RlS-kd-Esh"/>
                                     <constraint firstItem="OVY-pc-ANi" firstAttribute="leading" secondItem="FSu-6u-RP3" secondAttribute="leading" id="TA4-dS-G1b"/>
-                                    <constraint firstItem="OVY-pc-ANi" firstAttribute="top" secondItem="FSu-6u-RP3" secondAttribute="top" id="UTb-fE-aGd"/>
+                                    <constraint firstItem="OVY-pc-ANi" firstAttribute="top" secondItem="FSu-6u-RP3" secondAttribute="top" constant="7" id="UTb-fE-aGd"/>
+                                    <constraint firstItem="Enk-3b-g9P" firstAttribute="top" secondItem="OVY-pc-ANi" secondAttribute="bottom" id="gN4-hu-Tgt"/>
                                     <constraint firstAttribute="trailing" secondItem="Enk-3b-g9P" secondAttribute="trailing" id="iuH-Ly-ETL"/>
-                                    <constraint firstItem="Enk-3b-g9P" firstAttribute="top" secondItem="OVY-pc-ANi" secondAttribute="bottom" id="kqD-Xq-x3j"/>
-                                    <constraint firstItem="qSd-RS-i9I" firstAttribute="top" secondItem="FSu-6u-RP3" secondAttribute="top" id="sRI-Up-IX2"/>
+                                    <constraint firstItem="Enk-3b-g9P" firstAttribute="top" secondItem="qSd-RS-i9I" secondAttribute="bottom" id="v6T-zo-JB5"/>
+                                    <constraint firstItem="qSd-RS-i9I" firstAttribute="trailing" secondItem="Enk-3b-g9P" secondAttribute="trailing" id="xcl-nh-oOD"/>
                                     <constraint firstAttribute="bottom" secondItem="Enk-3b-g9P" secondAttribute="bottom" id="y7d-mI-EJg"/>
                                 </constraints>
                                 <connections>
@@ -97,6 +97,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="Zci-au-TjI"/>
                     <connections>
+                        <outlet property="customDateView" destination="FSu-6u-RP3" id="W9W-0z-nww"/>
                         <outlet property="heightOfCustomDateView" destination="PaM-qL-zQv" id="xPa-kU-gcP"/>
                         <outlet property="tableViewAlarm" destination="CPb-NU-bLs" id="hgd-Gr-lPW"/>
                     </connections>

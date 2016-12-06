@@ -11,16 +11,30 @@ import UIKit
 protocol DismissibleDatePicker: class{
     
     func didTapCancel()
-    func didTapDone()
+    func didTapDone(_ selectedDate: Date)
 }
 
 class CustomDateView: UIView {
 
-    @IBOutlet weak var datePicker: UIDatePicker!
+    @IBOutlet weak var datePicker: UIDatePicker! {
+        didSet {
+            datePicker.datePickerMode = .dateAndTime
+            datePicker.timeZone = TimeZone(identifier: "Asia/Kolkata")
+            let currentDate = Date()
+            datePicker.minimumDate = currentDate
+            datePicker.maximumDate = Calendar.current.date(byAdding: .day, value: 1, to: currentDate)
+            datePicker.date = currentDate
+        }
+    }
     @IBOutlet weak var doneButton: UIButton!
     @IBOutlet weak var cancelButton: UIButton!
     
     weak var delegate: DismissibleDatePicker?
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
     
     @IBAction func cancelTapped(_ sender: Any) {
         
@@ -29,7 +43,9 @@ class CustomDateView: UIView {
     
     @IBAction func doneTapped(_ sender: Any) {
         
-        delegate?.didTapDone()
+        let selectedDate = datePicker.date
+        delegate?.didTapDone(selectedDate)
+        
     }
     
     /*
