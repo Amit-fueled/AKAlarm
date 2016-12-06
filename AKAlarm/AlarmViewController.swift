@@ -117,11 +117,7 @@ class AlarmViewController: UIViewController , UITableViewDelegate, UITableViewDa
             self.tableViewAlarm.reloadData()
         }
     }
-    
 }
-
-
-
 extension Date {
     
     func toString() -> String {

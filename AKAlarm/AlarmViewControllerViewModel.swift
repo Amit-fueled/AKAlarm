@@ -57,13 +57,12 @@ class AlarmViewControllerViewModel: AlarmsDataFetcher {
         // assign a unique identifier to the notification so that we can retrieve it later
         notification.userInfo = ["UUID": selectedDate.getTime()]
         notification.badge = (UIApplication.shared.applicationIconBadgeNumber + 1) as NSNumber
-
         let trigger = UNTimeIntervalNotificationTrigger.init(timeInterval: selectedDate.timeIntervalSince(Date()), repeats: false)
-        let request = UNNotificationRequest.init(identifier: "twoseconds", content: notification, trigger: trigger)
-
+        let request = UNNotificationRequest.init(identifier: selectedDate.getTime(), content: notification, trigger: trigger)
         UNUserNotificationCenter.current().add(request, withCompletionHandler: { error in
-            
-            print(error?.localizedDescription ?? "Notification could not be added")
+            if error != nil {
+                print(error?.localizedDescription ?? "Notification could not be added")
+            }
         })
         
     }
@@ -80,6 +79,7 @@ class AlarmViewControllerViewModel: AlarmsDataFetcher {
         
         if cellDataArray.count > index{
             cellDataArray[index].revertAlarm()
+            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [(cellData(at: index)?.time)!])
         }
     }
 
