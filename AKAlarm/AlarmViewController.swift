@@ -42,12 +42,19 @@ class AlarmViewController: UIViewController , UITableViewDelegate, UITableViewDa
         // Do any additional setup after loading the view, typically from a nib.
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        
+        
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
     func addTapped(sender: Any){
+        
+        customDateView.datePicker.date = Date()
         UIView.animate(withDuration: 0.5, animations: {
             self.heightOfCustomDateView.constant = 150
             self.view.layoutIfNeeded()
@@ -81,7 +88,6 @@ class AlarmViewController: UIViewController , UITableViewDelegate, UITableViewDa
             self.viewModel?.didSwitchAlarm(at: indexPath.row)
             self.tableViewAlarm.reloadRows(at: [indexPath], with: UITableViewRowAnimation.bottom)
         }
-        
         return cell!
     }
     
@@ -94,13 +100,21 @@ class AlarmViewController: UIViewController , UITableViewDelegate, UITableViewDa
     
     func didTapDone(_ selectedDate: Date) {
         
-        viewModel?.setAnAlarm(with: selectedDate)
-        UIView.animate(withDuration: 0.5, animations: {
-            self.heightOfCustomDateView.constant = 0 // heightCon is the IBOutlet to the constraint
-            self.view.layoutIfNeeded()
-        })
+        guard let result = (viewModel?.setAnAlarm(on: selectedDate)) , selectedDate < Date() else {
+            return
+        }
         
-        
+        if result{
+            UIView.animate(withDuration: 0.5, animations: {
+                self.heightOfCustomDateView.constant = 0 // heightCon is the IBOutlet to the constraint
+                self.view.layoutIfNeeded()
+            })
+        }else{
+            let alertView = UIAlertController(title: "Message",
+                                              message: "Try for an another time.", preferredStyle: .alert)
+            alertView.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+            self.present(alertView, animated: true, completion: nil)
+        }
     }
     
     
@@ -113,7 +127,6 @@ class AlarmViewController: UIViewController , UITableViewDelegate, UITableViewDa
     
     func reloadViews() {
         DispatchQueue.main.async {
-            
             self.tableViewAlarm.reloadData()
         }
     }
@@ -122,7 +135,7 @@ extension Date {
     
     func toString() -> String {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
         return dateFormatter.string(from: self as Date)
     }
     

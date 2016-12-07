@@ -26,7 +26,12 @@ class AlarmViewControllerViewModel: AlarmsDataFetcher {
     
     var cellDataArray: [AlarmTableViewCellModel] = []
     weak var delegate : AlarmListViewModelDelegate?
-
+    let alarmHandler: AlarmHandler
+    
+    init(){
+        alarmHandler = AlarmHandler()
+    }
+    
     func reloadData() {
         
         
@@ -37,7 +42,14 @@ class AlarmViewControllerViewModel: AlarmsDataFetcher {
         
     }
     
-    func setAnAlarm(with selectedDate: Date){
+    func setAnAlarm(on selectedDate: Date) -> Bool? {
+        
+        
+        for cellData in cellDataArray {
+            if cellData.time == selectedDate.getTime() {
+                return false
+            }
+        }
         
         var alarmDict = [String:Any]()
         let selectedDateString = selectedDate.toString()
@@ -48,23 +60,9 @@ class AlarmViewControllerViewModel: AlarmsDataFetcher {
         let alarmObject = Alarm(dict: alarmDict)
         let cellModel = AlarmTableViewCellModel(object: alarmObject)
         cellDataArray.append(cellModel)
+        alarmHandler.scheduleNotification(on: selectedDate)
         delegate?.reloadViews()
-        
-        let notification = UNMutableNotificationContent()
-        notification.title = "Alarm"
-        notification.body = "Wake up"
-        notification.sound = UNNotificationSound.default()
-        // assign a unique identifier to the notification so that we can retrieve it later
-        notification.userInfo = ["UUID": selectedDate.getTime()]
-        notification.badge = (UIApplication.shared.applicationIconBadgeNumber + 1) as NSNumber
-        let trigger = UNTimeIntervalNotificationTrigger.init(timeInterval: selectedDate.timeIntervalSince(Date()), repeats: false)
-        let request = UNNotificationRequest.init(identifier: selectedDate.getTime(), content: notification, trigger: trigger)
-        UNUserNotificationCenter.current().add(request, withCompletionHandler: { error in
-            if error != nil {
-                print(error?.localizedDescription ?? "Notification could not be added")
-            }
-        })
-        
+        return true
     }
     
     func cellData(at index: Int) -> AlarmTableViewCellModel? {
@@ -78,8 +76,11 @@ class AlarmViewControllerViewModel: AlarmsDataFetcher {
     func didSwitchAlarm(at index: Int) -> () {
         
         if cellDataArray.count > index{
+            guard cellData(at: index)?.time != nil else {
+                return
+            }
             cellDataArray[index].revertAlarm()
-            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [(cellData(at: index)?.time)!])
+            alarmHandler.cancelNotification(with: [(cellData(at: index)?.time)!])
         }
     }
 

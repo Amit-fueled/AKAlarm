@@ -10,11 +10,10 @@ import UIKit
 
 struct AlarmTableViewCellModel {
     
-    let date: String!
-    let time: String!
-    var isAlarmActive: Bool!
+    let date: String
+    let time: String
+    var isAlarmActive: Bool
     
-
     init(object: Alarm){
         date = object.date
         time = object.time

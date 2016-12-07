@@ -10,9 +10,9 @@ import UIKit
 
 class Alarm: NSObject {
     
-    let date: String!
-    let time: String!
-    let isAlarmActive: Bool!
+    let date: String
+    let time: String
+    let isAlarmActive: Bool
     
     init(dict: [String: Any]) {
         date = dict["date"] as! String
