@@ -28,12 +28,14 @@ class AlarmViewController: UIViewController , UITableViewDelegate, UITableViewDa
     static let rowHeight = 51
     static let numberOfSection = 1
     static let heightForHeaderInSection = 0
+    static let cellNibName = "AlarmTableViewCell"
+    static let navigationTitle = "Create Alarm"
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(AlarmViewController.addTapped))
-        navigationItem.title = "Create Alarm"
-        tableViewAlarm.register(UINib(nibName: "AlarmTableViewCell", bundle: nil), forCellReuseIdentifier: "AlarmTableViewCell")
+        navigationItem.title = AlarmViewController.navigationTitle
+        tableViewAlarm.register(UINib(nibName: AlarmViewController.cellNibName, bundle: nil), forCellReuseIdentifier: AlarmViewController.cellNibName)
         tableViewAlarm.tableFooterView = UIView()
         tableViewAlarm.allowsSelection = false
         
@@ -97,10 +99,9 @@ class AlarmViewController: UIViewController , UITableViewDelegate, UITableViewDa
     }
     
     // MARK: Cancel and done button actions
-    
     func didTapDone(_ selectedDate: Date) {
         
-        guard let result = (viewModel?.setAnAlarm(on: selectedDate)) , selectedDate < Date() else {
+        guard let result = (viewModel?.setAnAlarm(on: selectedDate)) else {
             return
         }
         
@@ -126,6 +127,7 @@ class AlarmViewController: UIViewController , UITableViewDelegate, UITableViewDa
     }
     
     func reloadViews() {
+        
         DispatchQueue.main.async {
             self.tableViewAlarm.reloadData()
         }
@@ -135,7 +137,7 @@ extension Date {
     
     func toString() -> String {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         return dateFormatter.string(from: self as Date)
     }
     
@@ -149,6 +151,10 @@ extension Date {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd/MM/yyyy"
         return dateFormatter.string(from: self)
+    }
+    
+    func minutes(from date: Date) -> Int {
+        return Calendar.current.dateComponents([.minute], from: date, to: self).minute ?? 0
     }
 }
 

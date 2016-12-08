@@ -44,17 +44,18 @@ class AlarmViewControllerViewModel: AlarmsDataFetcher {
     
     func setAnAlarm(on selectedDate: Date) -> Bool? {
         
-        
         for cellData in cellDataArray {
             if cellData.time == selectedDate.getTime() {
                 return false
             }
         }
-        
+        if selectedDate.minutes(from: Date()) < 1 {
+            return false
+        }
         var alarmDict = [String:Any]()
         let selectedDateString = selectedDate.toString()
         print(selectedDateString)
-        alarmDict["date"] = selectedDate.getDate()
+        alarmDict["date"] = selectedDateString
         alarmDict["time"] = selectedDate.getTime()
         alarmDict["isAlarmActive"] = true
         let alarmObject = Alarm(dict: alarmDict)
@@ -83,6 +84,14 @@ class AlarmViewControllerViewModel: AlarmsDataFetcher {
             alarmHandler.cancelNotification(with: [(cellData(at: index)?.time)!])
         }
     }
-
     
+    func updateAlarmsStates(){
+        
+        cellDataArray = cellDataArray.filter { $0.date < Date().toString() }.map {
+            var newObject = $0
+            newObject.isAlarmActive = false
+            return newObject
+        }
+        delegate?.reloadViews()
+    }
 }

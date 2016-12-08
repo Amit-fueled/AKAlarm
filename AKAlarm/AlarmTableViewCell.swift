@@ -14,14 +14,14 @@ class AlarmTableViewCell: UITableViewCell {
     
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var switchAlarm: UISwitch!
-
+    
     var tapBlock: TapClosure?
     
     override func awakeFromNib(){
         super.awakeFromNib()
         // Initialization code
     }
-
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         // Configure the view for the selected state
@@ -36,9 +36,7 @@ class AlarmTableViewCell: UITableViewCell {
     }
     
     func configure(withModel model: AlarmTableViewCellModel) {
-        
         timeLabel.text = model.time
         switchAlarm.isOn = model.isAlarmActive
     }
-
 }
