@@ -11,12 +11,10 @@ import UIKit
 import UserNotifications
 
 protocol AlarmListViewModelDelegate : class{
-    
     func reloadViews()
 }
 
 protocol AlarmsDataFetcher {
-    
     var cellDataArray: [AlarmTableViewCellModel] { get set }
     weak var delegate : AlarmListViewModelDelegate? { get set }
     func reloadData()
@@ -34,11 +32,9 @@ class AlarmViewControllerViewModel: AlarmsDataFetcher {
     
     func reloadData() {
         
-        
     }
     
     func prepareCellData(with selectedDate: Date){
-        
         
     }
     
@@ -76,13 +72,12 @@ class AlarmViewControllerViewModel: AlarmsDataFetcher {
     
     func didSwitchAlarm(at index: Int) -> () {
         
-        if cellDataArray.count > index{
-            guard cellData(at: index)?.time != nil else {
-                return
-            }
-            cellDataArray[index].revertAlarm()
-            alarmHandler.cancelNotification(with: [(cellData(at: index)?.time)!])
+        guard cellData(at: index)?.time != nil else {
+            return
         }
+        cellDataArray[index].revertAlarm()
+        alarmHandler.cancelNotification(with: [(cellData(at: index)?.time)!])
+        
     }
     
     func updateAlarmsStates(){

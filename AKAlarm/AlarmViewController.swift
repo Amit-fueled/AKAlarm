@@ -18,7 +18,6 @@ class AlarmViewController: UIViewController , UITableViewDelegate, UITableViewDa
             customDateView?.delegate = self
         }
     }
-    
     var viewModel: AlarmViewControllerViewModel? {
         didSet{
             viewModel?.delegate = self
@@ -33,6 +32,8 @@ class AlarmViewController: UIViewController , UITableViewDelegate, UITableViewDa
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Do any additional setup after loading the view, typically from a nib.
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(AlarmViewController.addTapped))
         navigationItem.title = AlarmViewController.navigationTitle
         tableViewAlarm.register(UINib(nibName: AlarmViewController.cellNibName, bundle: nil), forCellReuseIdentifier: AlarmViewController.cellNibName)
@@ -41,12 +42,6 @@ class AlarmViewController: UIViewController , UITableViewDelegate, UITableViewDa
         
         heightOfCustomDateView.constant = 0
         viewModel = AlarmViewControllerViewModel()
-        // Do any additional setup after loading the view, typically from a nib.
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        
-        
     }
     
     override func didReceiveMemoryWarning() {
@@ -117,7 +112,6 @@ class AlarmViewController: UIViewController , UITableViewDelegate, UITableViewDa
             self.present(alertView, animated: true, completion: nil)
         }
     }
-    
     
     func didTapCancel() {
         UIView.animate(withDuration: 0.5, animations: {
