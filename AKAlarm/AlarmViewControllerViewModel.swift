@@ -36,10 +36,15 @@ class AlarmViewControllerViewModel: AlarmsDataFetcher {
                 return false
             }
         }
-                
+    
         if selectedDate.minutes(from: Date()) < 1 {
             return false
         }
+        
+        if selectedDate < Date(){
+            return false
+        }
+        
         let alarmObject = Alarm(dict: makeDict(date: selectedDate))
         let cellModel = AlarmTableViewCellModel(object: alarmObject)
         cellDataArray.append(cellModel)
@@ -78,9 +83,11 @@ class AlarmViewControllerViewModel: AlarmsDataFetcher {
     
     func updateAlarmsState(){
         
-        cellDataArray = cellDataArray.filter { $0.date < Date().toString() }.map {
+        cellDataArray = cellDataArray.map {
             var newObject = $0
-            newObject.isAlarmActive = false
+            if newObject.date < Date().toString() {
+                newObject.isAlarmActive = false
+            }
             return newObject
         }
         delegate?.reloadViews()

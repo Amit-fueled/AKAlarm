@@ -36,7 +36,6 @@ class AlarmHandler {
     }
     
     class func cancelNotification(for identifires: [String]){
-        
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: identifires)
     }
     

@@ -9,7 +9,6 @@
 import UIKit
 
 protocol CustomDateViewDelegate: class{
-    
     func didTapCancel()
     func didTapDone(_ selectedDate: Date)
 }
@@ -18,11 +17,11 @@ class CustomDateView: UIView {
 
     @IBOutlet weak var datePicker: UIDatePicker! {
         didSet {
-            datePicker.datePickerMode = .dateAndTime
+            datePicker.datePickerMode = .time
             datePicker.timeZone = TimeZone(identifier: "Asia/Kolkata")
             let currentDate = Date()
-            datePicker.minimumDate = currentDate
-            datePicker.maximumDate = Calendar.current.date(byAdding: .day, value: 1, to: currentDate)
+//            datePicker.minimumDate = currentDate
+//            datePicker.maximumDate = Calendar.current.date(byAdding: .day, value: 1, to: currentDate)
             datePicker.date = currentDate
         }
     }
@@ -41,7 +40,11 @@ class CustomDateView: UIView {
     }
     
     @IBAction func doneTapped(_ sender: Any) {
-        let selectedDate = datePicker.date
+        var selectedDate = datePicker.date
+        
+        if selectedDate < Date() {
+            selectedDate = Calendar.current.date(byAdding: .day, value: 1, to: selectedDate) ?? selectedDate
+        }
         delegate?.didTapDone(selectedDate)
     }
     
