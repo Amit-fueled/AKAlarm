@@ -5,7 +5,6 @@
 //  Created by Amit-Fueled on 30/11/16.
 //  Copyright © 2016 Amit-Fueled. All rights reserved.
 //
-
 import UIKit
 
 protocol CustomDateViewDelegate: class{
@@ -20,8 +19,6 @@ class CustomDateView: UIView {
             datePicker.datePickerMode = .time
             datePicker.timeZone = TimeZone(identifier: "Asia/Kolkata")
             let currentDate = Date()
-//            datePicker.minimumDate = currentDate
-//            datePicker.maximumDate = Calendar.current.date(byAdding: .day, value: 1, to: currentDate)
             datePicker.date = currentDate
         }
     }
@@ -47,13 +44,4 @@ class CustomDateView: UIView {
         }
         delegate?.didTapDone(selectedDate)
     }
-    
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
-
 }
