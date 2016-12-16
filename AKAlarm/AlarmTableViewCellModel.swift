@@ -15,8 +15,8 @@ struct AlarmTableViewCellModel {
     var isAlarmActive: Bool
     
     init(object: Alarm){
-        date = object.date
-        time = object.time
+        date = object.date.toString()
+        time = object.date.getTime()
         isAlarmActive = object.isAlarmActive
     }
     

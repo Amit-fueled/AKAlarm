@@ -7,8 +7,6 @@
 //
 
 import Foundation
-import UIKit
-import UserNotifications
 
 protocol AlarmListViewModelDelegate : class{
     func reloadViews()
@@ -24,19 +22,12 @@ class AlarmViewControllerViewModel: AlarmsDataFetcher {
     
     var cellDataArray: [AlarmTableViewCellModel] = []
     weak var delegate : AlarmListViewModelDelegate?
-    let alarmHandler: AlarmHandler
-    
-    init(){
-        alarmHandler = AlarmHandler()
-    }
+    let alarmHandler = AlarmHandler()
     
     func reloadData() {
         
     }
     
-    func prepareCellData(with selectedDate: Date){
-        
-    }
     
     func setAnAlarm(on selectedDate: Date) -> Bool? {
         
@@ -45,21 +36,23 @@ class AlarmViewControllerViewModel: AlarmsDataFetcher {
                 return false
             }
         }
+                
         if selectedDate.minutes(from: Date()) < 1 {
             return false
         }
-        var alarmDict = [String:Any]()
-        let selectedDateString = selectedDate.toString()
-        print(selectedDateString)
-        alarmDict["date"] = selectedDateString
-        alarmDict["time"] = selectedDate.getTime()
-        alarmDict["isAlarmActive"] = true
-        let alarmObject = Alarm(dict: alarmDict)
+        let alarmObject = Alarm(dict: makeDict(date: selectedDate))
         let cellModel = AlarmTableViewCellModel(object: alarmObject)
         cellDataArray.append(cellModel)
-        alarmHandler.scheduleNotification(on: selectedDate)
+        AlarmHandler.scheduleNotification(for: selectedDate)
         delegate?.reloadViews()
         return true
+    }
+    
+    private func makeDict(date selectedDate: Date) -> [String: Any]{
+        var alarmDict = [String:Any]()
+        alarmDict["date"] = selectedDate
+        alarmDict["isAlarmActive"] = true
+        return alarmDict
     }
     
     func cellData(at index: Int) -> AlarmTableViewCellModel? {
@@ -72,15 +65,18 @@ class AlarmViewControllerViewModel: AlarmsDataFetcher {
     
     func didSwitchAlarm(at index: Int) -> () {
         
-        guard cellData(at: index)?.time != nil else {
+        guard let cellModel = cellData(at: index) else {
             return
         }
-        cellDataArray[index].revertAlarm()
-        alarmHandler.cancelNotification(with: [(cellData(at: index)?.time)!])
         
+        if cellModel.date > Date().toString() {
+           
+            cellDataArray[index].revertAlarm()
+            AlarmHandler.cancelNotification(for: [cellModel.time])
+        }
     }
     
-    func updateAlarmsStates(){
+    func updateAlarmsState(){
         
         cellDataArray = cellDataArray.filter { $0.date < Date().toString() }.map {
             var newObject = $0

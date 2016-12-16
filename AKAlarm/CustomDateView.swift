@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol DismissibleDatePicker: class{
+protocol CustomDateViewDelegate: class{
     
     func didTapCancel()
     func didTapDone(_ selectedDate: Date)
@@ -29,7 +29,7 @@ class CustomDateView: UIView {
     @IBOutlet weak var doneButton: UIButton!
     @IBOutlet weak var cancelButton: UIButton!
     
-    weak var delegate: DismissibleDatePicker?
+    weak var delegate: CustomDateViewDelegate?
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -37,15 +37,12 @@ class CustomDateView: UIView {
     
     
     @IBAction func cancelTapped(_ sender: Any) {
-        
         delegate?.didTapCancel()
     }
     
     @IBAction func doneTapped(_ sender: Any) {
-        
         let selectedDate = datePicker.date
         delegate?.didTapDone(selectedDate)
-        
     }
     
     /*

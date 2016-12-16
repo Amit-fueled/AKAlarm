@@ -15,7 +15,7 @@ class AlarmHandler {
     static let title = "Alarm"
     static let body = "Wake up"
     
-    func scheduleNotification(on selectedDate: Date){
+    class func scheduleNotification(for selectedDate: Date){
         
         let notification = UNMutableNotificationContent()
         notification.title = AlarmHandler.title
@@ -23,8 +23,8 @@ class AlarmHandler {
         notification.sound = UNNotificationSound.default()
         notification.badge = (UIApplication.shared.applicationIconBadgeNumber + 1) as NSNumber
         
-        let trigger = UNTimeIntervalNotificationTrigger.init(timeInterval: selectedDate.timeIntervalSince(Date()), repeats: false)
-        let request = UNNotificationRequest.init(identifier: selectedDate.getTime(), content: notification, trigger: trigger)
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: selectedDate.timeIntervalSince(Date()), repeats: false)
+        let request = UNNotificationRequest(identifier: selectedDate.getTime(), content: notification, trigger: trigger)
         
         // assign a unique identifier to the notification so that we can retrieve it later
         UNUserNotificationCenter.current().add(request, withCompletionHandler: { error in
@@ -35,7 +35,7 @@ class AlarmHandler {
         UNUserNotificationCenter.current().removeAllDeliveredNotifications()
     }
     
-    func cancelNotification(with identifires: [String]){
+    class func cancelNotification(for identifires: [String]){
         
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: identifires)
     }

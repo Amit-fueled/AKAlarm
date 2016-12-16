@@ -8,21 +8,17 @@
 
 import UIKit
 
-class AlarmViewController: UIViewController , UITableViewDelegate, UITableViewDataSource,DismissibleDatePicker,AlarmListViewModelDelegate {
+class AlarmViewController: UIViewController , UITableViewDelegate, UITableViewDataSource,CustomDateViewDelegate,AlarmListViewModelDelegate {
     
     @IBOutlet weak var tableViewAlarm: UITableView!
     @IBOutlet weak var heightOfCustomDateView: NSLayoutConstraint!
     
-    @IBOutlet weak var customDateView: CustomDateView! {
+    @IBOutlet weak var customDateView: CustomDateView? {
         didSet{
             customDateView?.delegate = self
         }
     }
-    var viewModel: AlarmViewControllerViewModel? {
-        didSet{
-            viewModel?.delegate = self
-        }
-    }
+    var viewModel = AlarmViewControllerViewModel()
     
     static let rowHeight = 51
     static let numberOfSection = 1
@@ -36,12 +32,15 @@ class AlarmViewController: UIViewController , UITableViewDelegate, UITableViewDa
         // Do any additional setup after loading the view, typically from a nib.
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(AlarmViewController.addTapped))
         navigationItem.title = AlarmViewController.navigationTitle
+        
         tableViewAlarm.register(UINib(nibName: AlarmViewController.cellNibName, bundle: nil), forCellReuseIdentifier: AlarmViewController.cellNibName)
         tableViewAlarm.tableFooterView = UIView()
         tableViewAlarm.allowsSelection = false
         
         heightOfCustomDateView.constant = 0
-        viewModel = AlarmViewControllerViewModel()
+        
+        viewModel.delegate = self
+
     }
     
     override func didReceiveMemoryWarning() {
@@ -49,9 +48,9 @@ class AlarmViewController: UIViewController , UITableViewDelegate, UITableViewDa
         // Dispose of any resources that can be recreated.
     }
     
-    func addTapped(sender: Any){
+    internal func addTapped(sender: Any){
         
-        customDateView.datePicker.date = Date()
+        customDateView?.datePicker.date = Date()
         UIView.animate(withDuration: 0.5, animations: {
             self.heightOfCustomDateView.constant = 150
             self.view.layoutIfNeeded()
@@ -70,20 +69,20 @@ class AlarmViewController: UIViewController , UITableViewDelegate, UITableViewDa
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return viewModel?.cellDataArray.count ?? 0
+        return viewModel.cellDataArray.count 
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableViewAlarm.dequeueReusableCell(type: AlarmTableViewCell.self, forIndexPath: indexPath)
         
-        if let cellModel = viewModel?.cellData(at: indexPath.row)
+        if let cellModel = viewModel.cellData(at: indexPath.row)
         {
             cell?.configure(withModel: cellModel)
         }
         cell?.tapBlock = {
-            self.viewModel?.didSwitchAlarm(at: indexPath.row)
-            self.tableViewAlarm.reloadRows(at: [indexPath], with: UITableViewRowAnimation.bottom)
+            self.viewModel.didSwitchAlarm(at: indexPath.row)
+            self.tableViewAlarm.reloadRows(at: [indexPath], with: UITableViewRowAnimation.fade)
         }
         return cell!
     }
@@ -94,17 +93,14 @@ class AlarmViewController: UIViewController , UITableViewDelegate, UITableViewDa
     }
     
     // MARK: Cancel and done button actions
-    func didTapDone(_ selectedDate: Date) {
+    internal func didTapDone(_ selectedDate: Date) {
         
-        guard let result = (viewModel?.setAnAlarm(on: selectedDate)) else {
+        guard let result = (viewModel.setAnAlarm(on: selectedDate)) else {
             return
         }
         
         if result{
-            UIView.animate(withDuration: 0.5, animations: {
-                self.heightOfCustomDateView.constant = 0 // heightCon is the IBOutlet to the constraint
-                self.view.layoutIfNeeded()
-            })
+            dismissCustomDateView()
         }else{
             let alertView = UIAlertController(title: "Message",
                                               message: "Try for an another time.", preferredStyle: .alert)
@@ -113,14 +109,18 @@ class AlarmViewController: UIViewController , UITableViewDelegate, UITableViewDa
         }
     }
     
-    func didTapCancel() {
+    internal func didTapCancel() {
+        dismissCustomDateView()
+    }
+    
+    private func dismissCustomDateView(){
         UIView.animate(withDuration: 0.5, animations: {
             self.heightOfCustomDateView.constant = 0 // heightCon is the IBOutlet to the constraint
             self.view.layoutIfNeeded()
         })
     }
     
-    func reloadViews() {
+    internal func reloadViews() {
         
         DispatchQueue.main.async {
             self.tableViewAlarm.reloadData()

@@ -28,7 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 return
             }
             if granted {
-                application.registerForRemoteNotifications()
+//                application.registerForRemoteNotifications()
             }
         }
         return true
@@ -54,9 +54,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         let rootVC = window?.rootViewController as? UINavigationController
         let alarmVC = rootVC?.viewControllers.first as? AlarmViewController
-        alarmVC?.viewModel?.updateAlarmsStates()
+        alarmVC?.viewModel.updateAlarmsState()
         UIApplication.shared.applicationIconBadgeNumber = 0
-
         
     }
     
@@ -64,19 +63,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         // Saves changes in the application's managed object context before the application terminates.
         self.saveContext()
-    }
-    
-    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        
-        let deviceTokenString = deviceToken.reduce("", {$0 + String(format: "%02X", $1)})
-        print(deviceTokenString)
-    }
-    
-    
-    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
-        
-        print("i am not available in simulator \(error)")
-        
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
